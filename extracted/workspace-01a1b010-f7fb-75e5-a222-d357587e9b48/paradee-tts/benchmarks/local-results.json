@@ -1,0 +1,90 @@
+{
+  "environment": "local Uvicorn server",
+  "timestamp_utc": "2026-11-06T08:59:49Z",
+  "python": "3.12.16",
+  "platform": "Linux-6.1.189+-x86_64-with-glibc2.41",
+  "cpu_count": 2,
+  "cold_startup_seconds": 0.4908,
+  "runs": [
+    {
+      "length": "short",
+      "iteration": 1,
+      "characters": 25,
+      "request_seconds": 2.8396,
+      "model_seconds": 2.825,
+      "audio_seconds": 2.125,
+      "real_time_factor": 1.32941,
+      "audio_bytes": 102044
+    },
+    {
+      "length": "short",
+      "iteration": 2,
+      "characters": 25,
+      "request_seconds": 2.8406,
+      "model_seconds": 2.8259,
+      "audio_seconds": 2.125,
+      "real_time_factor": 1.32984,
+      "audio_bytes": 102044
+    },
+    {
+      "length": "medium",
+      "iteration": 1,
+      "characters": 107,
+      "request_seconds": 2.975,
+      "model_seconds": 2.9638,
+      "audio_seconds": 8.325,
+      "real_time_factor": 0.35601,
+      "audio_bytes": 399644
+    },
+    {
+      "length": "medium",
+      "iteration": 2,
+      "characters": 107,
+      "request_seconds": 2.9394,
+      "model_seconds": 2.9262,
+      "audio_seconds": 8.325,
+      "real_time_factor": 0.3515,
+      "audio_bytes": 399644
+    },
+    {
+      "length": "long",
+      "iteration": 1,
+      "characters": 348,
+      "request_seconds": 3.4801,
+      "model_seconds": 3.4685,
+      "audio_seconds": 22.8,
+      "real_time_factor": 0.15213,
+      "audio_bytes": 1094444
+    },
+    {
+      "length": "long",
+      "iteration": 2,
+      "characters": 348,
+      "request_seconds": 3.4643,
+      "model_seconds": 3.4541,
+      "audio_seconds": 22.8,
+      "real_time_factor": 0.1515,
+      "audio_bytes": 1094444
+    }
+  ],
+  "status": {
+    "model": "Paradee-8M-v1.2",
+    "model_loaded": true,
+    "model_load_seconds": 0.7692412520000289,
+    "generation_count": 9,
+    "peak_rss_mb": 324.88,
+    "last_error": null,
+    "inference_slots": 1,
+    "onnx_threads": 1,
+    "isolate_phonemizer": true,
+    "mp3_available": true
+  },
+  "voice_switch_test": "All four voices returned HTTP 200 with real audio",
+  "observed_memory_mb": {
+    "total": 412.71,
+    "parent": 324.88,
+    "child": 235.92
+  },
+  "model_download_bytes": 8462119,
+  "site_packages_bytes": 496024616
+}

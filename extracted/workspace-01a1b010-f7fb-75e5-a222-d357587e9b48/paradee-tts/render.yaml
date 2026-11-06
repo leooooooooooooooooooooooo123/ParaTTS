@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: paradee-tts
+    runtime: python
+    plan: free
+    pythonVersion: 3.12.12
+    buildCommand: pip install --no-cache-dir -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    envVars:
+      - {key: PYTHONUNBUFFERED, value: '1'}
+      - {key: ONNX_THREADS, value: '1'}
+      - {key: INFERENCE_SLOTS, value: '1'}
+      - {key: ISOLATE_PHONEMIZER, value: 'true'}
+      - {key: AUDIO_TTL_SECONDS, value: '1800'}
+      - {key: MAX_AUDIO_FILES, value: '25'}
+      - {key: HF_HOME, value: /tmp/paradee-hf}
+      - {key: AUDIO_DIR, value: /tmp/paradee-audio}
