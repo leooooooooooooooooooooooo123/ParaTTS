@@ -1,0 +1,67 @@
+
+name: Automatic ZIP Extraction
+
+on:
+  push:
+    paths:
+      - '**.zip'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract ZIP files
+        run: |
+          python3 - <<'PY'
+          import zipfile
+          from pathlib import Path, PurePosixPath
+
+          root = Path.cwd()
+          output = root / "extracted"
+          output.mkdir(exist_ok=True)
+
+          archives = [
+              p for p in root.rglob("*.zip")
+              if ".git" not in p.parts
+              and "extracted" not in p.relative_to(root).parts
+          ]
+
+          for archive in archives:
+              destination = output / archive.stem
+
+              with zipfile.ZipFile(archive) as z:
+                  for item in z.infolist():
+                      name = PurePosixPath(item.filename)
+
+                      if name.is_absolute() or ".." in name.parts:
+                          raise ValueError("Unsafe ZIP path")
+
+                      if ".git" in name.parts:
+                          raise ValueError("Blocked .git path")
+
+                      if (item.external_attr >> 16) & 0o170000 == 0o120000:
+                          raise ValueError("Symlinks not allowed")
+
+                  z.extractall(destination)
+
+              print("Extracted:", archive.name)
+
+          PY
+
+      - name: Commit extracted files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add extracted/
+          if ! git diff --cached --quiet; then
+            git commit -m "Automatically extract ZIP files"
+            git push
+          fi
